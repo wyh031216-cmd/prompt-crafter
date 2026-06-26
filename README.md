@@ -61,5 +61,5 @@ React 19 · TypeScript · Vite · Tailwind CSS 4 · Dexie · React Router
 ---
 
 <p align="center">
-  <sub>词坊 · 写一次、管版本、多平台出稿</sub>
+  <sub>词坊 · 引导出稿，多平台适配，版本可回溯</sub>
 </p>

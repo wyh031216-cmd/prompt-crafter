@@ -35,7 +35,7 @@ export default function HomeHero({ compact }: HomeHeroProps) {
         多平台提示词工作台
       </p>
       <h2 className="font-serif text-2xl lg:text-3xl text-espresso leading-snug mb-2">
-        写一次、管版本、多平台试运行
+        引导出稿，多平台适配，版本可回溯
       </h2>
       <p className="text-sm text-espresso-soft max-w-xl leading-relaxed mb-6">
         不会写提示词？用引导生成描述你的需求，30 秒出稿并自动存入词库，进编辑器继续打磨。
