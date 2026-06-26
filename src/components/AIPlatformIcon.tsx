@@ -6,15 +6,17 @@ interface AIPlatformIconProps {
   className?: string;
 }
 
-/** 官方 Logo 路径（来自 D:\GROK\logo → public/ai） */
+const assetBase = import.meta.env.BASE_URL;
+
+/** 官方 Logo（public/ai），兼容 GitHub Pages 子路径 */
 const LOGO_SRC: Partial<Record<AIPlatform, string>> = {
-  grok: '/ai/grok.png',
-  gemini: '/ai/gemini.png',
-  chatgpt: '/ai/chatgpt.png',
-  claude: '/ai/claude.png',
-  deepseek: '/ai/deepseek.png',
-  qwen: '/ai/qwen.png',
-  doubao: '/ai/doubao.png',
+  grok: `${assetBase}ai/grok.png`,
+  gemini: `${assetBase}ai/gemini.png`,
+  chatgpt: `${assetBase}ai/chatgpt.png`,
+  claude: `${assetBase}ai/claude.png`,
+  deepseek: `${assetBase}ai/deepseek.png`,
+  qwen: `${assetBase}ai/qwen.png`,
+  doubao: `${assetBase}ai/doubao.png`,
 };
 
 function GeneralIcon({ size, className }: { size: number; className: string }) {

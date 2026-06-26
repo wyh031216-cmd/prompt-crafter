@@ -90,9 +90,15 @@ export default function TemplatesPage() {
     navigate('/new', { state: { fromTemplate: payload } });
   };
 
+  const selectPlatform = (key: AIPlatform) => {
+    setPlatform(key);
+    setSubcategory('all');
+    if (isGlobalSearch) setSearchScope(key);
+  };
+
   if (selected) {
     return (
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto w-full">
         <button
           onClick={() => setSelected(null)}
           className="text-sm text-terracotta hover:text-terracotta-deep mb-4 cursor-pointer"
@@ -127,9 +133,10 @@ export default function TemplatesPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto flex flex-col min-h-0 lg:h-[calc(100vh-7.5rem)]">
-      <div className="mb-4 flex-shrink-0 space-y-4">
+    <div className="flex flex-col flex-1 min-h-0 w-full max-w-6xl mx-auto">
+      <div className="flex-shrink-0 space-y-3 mb-4">
         <PageHeader
+          className="mb-0"
           eyebrow="模板库"
           title="AI 提示词模板库"
           description={`共 ${PROMPT_TEMPLATES.length} 个模板 · 按 AI 平台分类（Grok 独立分支）`}
@@ -151,48 +158,45 @@ export default function TemplatesPage() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 min-h-0">
-        {/* 左侧：AI 平台 — 独立滚动 */}
-        <div className="lg:col-span-1 flex flex-col min-h-0 max-h-48 lg:max-h-none">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 min-h-0 lg:min-h-[20rem]">
+        {/* 左侧：平台 — 移动端横向滑动，桌面端纵向列表 */}
+        <div className="lg:col-span-1 flex flex-col min-h-0 min-w-0">
           <p className="text-xs font-semibold text-espresso-soft uppercase tracking-wide px-1 mb-2 flex-shrink-0">
             选择 AI 平台
           </p>
-          <div className="flex-1 min-h-0 overflow-y-auto space-y-2 overscroll-contain pr-0.5">
-          {PLATFORM_ORDER.map((key) => {
-            const cat = AI_PLATFORMS[key];
-            const active = isGlobalSearch ? searchScope === key : platform === key;
-            return (
-              <button
-                key={key}
-                onClick={() => {
-                  setPlatform(key);
-                  setSubcategory('all');
-                  if (isGlobalSearch) setSearchScope(key);
-                }}
-                className={`w-full text-left p-3 rounded-xl border-2 transition-all cursor-pointer ${
-                  active
-                    ? 'border-terracotta bg-terracotta/10 shadow-sm'
-                    : 'border-espresso/10 bg-paper hover:border-terracotta/20 hover:bg-cream'
-                }`}
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="flex items-center gap-2.5 text-base font-semibold text-espresso min-w-0">
-                    <AIPlatformIcon platform={key} size={28} />
-                    <span className="truncate">{cat.name}</span>
-                  </span>
-                  <span className="text-xs text-sage-light flex-shrink-0">{PLATFORM_TEMPLATE_COUNTS[key]}</span>
-                </div>
-                <p className="text-xs text-espresso-soft mt-1 line-clamp-2">{PLATFORM_DESC[key]}</p>
-              </button>
-            );
-          })}
+          <div className="flex gap-2 overflow-x-auto pb-1 lg:pb-0 lg:flex-col lg:overflow-y-auto lg:overflow-x-hidden flex-1 min-h-0 overscroll-contain pr-0.5 snap-x lg:snap-none">
+            {PLATFORM_ORDER.map((key) => {
+              const cat = AI_PLATFORMS[key];
+              const active = isGlobalSearch ? searchScope === key : platform === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => selectPlatform(key)}
+                  className={`flex-shrink-0 w-[11.5rem] lg:w-full text-left p-3 rounded-xl border-2 transition-all cursor-pointer snap-start ${
+                    active
+                      ? 'border-terracotta bg-terracotta/10 shadow-sm'
+                      : 'border-espresso/10 bg-paper hover:border-terracotta/20 hover:bg-cream'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="flex items-center gap-2.5 text-sm lg:text-base font-semibold text-espresso min-w-0">
+                      <AIPlatformIcon platform={key} size={28} />
+                      <span className="truncate">{cat.name}</span>
+                    </span>
+                    <span className="text-xs text-sage-light flex-shrink-0">{PLATFORM_TEMPLATE_COUNTS[key]}</span>
+                  </div>
+                  <p className="text-xs text-espresso-soft mt-1 line-clamp-2 hidden lg:block">{PLATFORM_DESC[key]}</p>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* 右侧：模板列表 — 独立滚动 */}
-        <div className="lg:col-span-3 flex flex-col min-h-0">
-          <div className="card p-4 flex flex-col flex-1 min-h-0">
-            <div className="flex items-center gap-2 mb-4 flex-shrink-0">
+        {/* 右侧：模板列表 */}
+        <div className="lg:col-span-3 flex flex-col min-h-0 min-w-0">
+          <div className="card p-4 flex flex-col flex-1 min-h-[16rem] lg:min-h-0">
+            <div className="flex items-center gap-2 mb-3 flex-shrink-0 flex-wrap">
               {isGlobalSearch ? (
                 <span className="text-sm font-medium text-espresso">全库搜索结果</span>
               ) : (
@@ -204,6 +208,7 @@ export default function TemplatesPage() {
             {!isGlobalSearch && platform === 'general' && (
               <div className="flex flex-wrap gap-1.5 mb-3 flex-shrink-0">
                 <button
+                  type="button"
                   onClick={() => setSubcategory('all')}
                   className={`px-2.5 py-1 text-xs rounded-lg cursor-pointer ${
                     subcategory === 'all' ? 'bg-slate-200 text-slate-800' : 'bg-paper text-espresso-soft'
@@ -215,6 +220,7 @@ export default function TemplatesPage() {
                   ([key, sub]) => (
                     <button
                       key={key}
+                      type="button"
                       onClick={() => setSubcategory(key)}
                       className={`px-2.5 py-1 text-xs rounded-lg cursor-pointer ${
                         subcategory === key ? 'bg-slate-200 text-slate-800' : 'bg-paper text-espresso-soft'
@@ -236,17 +242,18 @@ export default function TemplatesPage() {
                   return (
                     <button
                       key={t.id}
+                      type="button"
                       onClick={() => setSelected(t)}
                       className="w-full text-left p-4 rounded-xl border border-espresso/10 hover:border-terracotta/25 hover:bg-terracotta/10 transition-colors cursor-pointer group"
                     >
                       <div className="flex items-start gap-3">
-                        <span className="text-2xl">{t.icon}</span>
+                        <span className="text-2xl flex-shrink-0">{t.icon}</span>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium text-espresso">{t.name}</span>
-                            <ChevronRight className="w-4 h-4 text-sage-light group-hover:text-terracotta" />
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-medium text-espresso truncate">{t.name}</span>
+                            <ChevronRight className="w-4 h-4 text-sage-light group-hover:text-terracotta flex-shrink-0" />
                           </div>
-                          <p className="text-sm text-espresso-soft mt-0.5">{t.description}</p>
+                          <p className="text-sm text-espresso-soft mt-0.5 line-clamp-2">{t.description}</p>
                           <div className="flex items-center gap-2 mt-2 text-xs text-sage-light flex-wrap">
                             {isGlobalSearch && <PlatformChip platform={t.category} size="sm" />}
                             {sub && <span>{sub.icon} {sub.name}</span>}

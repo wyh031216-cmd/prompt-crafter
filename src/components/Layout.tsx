@@ -10,6 +10,8 @@ export default function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
   const isEditorWorkspace = /^\/(new|edit\/)/.test(location.pathname);
+  const isTemplatesPage = location.pathname === '/templates';
+  const isContainedPage = isEditorWorkspace || isTemplatesPage;
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -77,7 +79,7 @@ export default function Layout() {
 
           <main
             className={`flex-1 min-h-0 px-4 lg:px-6 pb-4 flex flex-col ${
-              isEditorWorkspace
+              isContainedPage
                 ? 'lg:overflow-hidden max-lg:overflow-y-auto'
                 : 'overflow-y-auto pb-6'
             }`}
