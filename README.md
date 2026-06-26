@@ -1,32 +1,65 @@
-# React + TypeScript + Vite
+# 词坊 · 多平台 AI 提示词工作台
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+[![在线试用](https://img.shields.io/badge/在线试用-打开词坊-c45c3e?style=for-the-badge)](https://wyh031216-cmd.github.io/prompt-crafter/)
+[![Stars](https://img.shields.io/github/stars/wyh031216-cmd/prompt-crafter?style=flat-square)](https://github.com/wyh031216-cmd/prompt-crafter/stargazers)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 
-Currently, two official plugins are available:
+**不会写提示词？** 描述需求 → 引导生成 → 自动存入词库 → 编辑器继续打磨。  
+支持 Grok / Claude / ChatGPT / Gemini / DeepSeek / 通义 / 豆包等 **75+** 模板，数据默认仅存本机。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+👉 **[立即试用（无需安装）](https://wyh031216-cmd.github.io/prompt-crafter/)**
 
-## React Compiler
+如果觉得有用，欢迎 **Star ⭐** 支持一下～
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 核心能力
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+| 能力 | 说明 |
+|------|------|
+| 🪄 **引导生成** | 选场景、填选项，自动生成多平台提示词（角色图 / 视频分镜 / 文案等） |
+| 📚 **模板库** | 75+ 模板，按 AI 平台分类，支持全库搜索 |
+| ✏️ **编辑器** | 变量填充、Markdown 预览、版本历史、文件夹管理 |
+| ✨ **API 优化** | 接入 DeepSeek / Claude / GPT 等，本地优化提示词 |
+| ▶️ **试运行** | 文本提示词一键对话测试（需自备 API Key） |
+| 💾 **本地优先** | Dexie + localStorage，支持导出备份 / WebDAV 同步 |
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## 在线地址
+
+| 页面 | 链接 |
+|------|------|
+| 首页 | https://wyh031216-cmd.github.io/prompt-crafter/ |
+| 引导生成 | https://wyh031216-cmd.github.io/prompt-crafter/guide |
+| 模板库 | https://wyh031216-cmd.github.io/prompt-crafter/templates |
+
+## 本地开发
+
+```bash
+git clone https://github.com/wyh031216-cmd/prompt-crafter.git
+cd prompt-crafter
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+浏览器打开 http://localhost:5188
+
+```bash
+npm run build    # 生产构建
+npm run preview  # 预览 dist
+```
+
+## 技术栈
+
+React 19 · TypeScript · Vite · Tailwind CSS 4 · Dexie · React Router
+
+## 给 Star 的朋友
+
+- 有 bug 或想法 → [提 Issue](https://github.com/wyh031216-cmd/prompt-crafter/issues)
+- 想参与改进 → Fork 后提 PR
+- 只是觉得好用 → 点右上角 **Star** 就是最大鼓励 ⭐
+
+---
+
+<p align="center">
+  <sub>词坊 · 写一次、管版本、多平台出稿</sub>
+</p>
