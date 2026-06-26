@@ -9,6 +9,9 @@ interface AIPlatformIconProps {
 const assetBase = import.meta.env.BASE_URL;
 
 /** 官方 Logo（public/ai），兼容 GitHub Pages 子路径 */
+/** 深色 Logo，浅底/深色背景上都需垫白底 */
+const LIGHT_BACKDROP_PLATFORMS: ReadonlySet<AIPlatform> = new Set(['grok']);
+
 const LOGO_SRC: Partial<Record<AIPlatform, string>> = {
   grok: `${assetBase}ai/grok.png`,
   gemini: `${assetBase}ai/gemini.png`,
@@ -38,7 +41,7 @@ export default function AIPlatformIcon({ platform, size = 20, className = '' }: 
   const alt = AI_PLATFORMS[platform].name;
 
   if (src) {
-    return (
+    const img = (
       <img
         src={src}
         alt={alt}
@@ -48,14 +51,25 @@ export default function AIPlatformIcon({ platform, size = 20, className = '' }: 
         draggable={false}
       />
     );
+    if (LIGHT_BACKDROP_PLATFORMS.has(platform)) {
+      return (
+        <span
+          className="inline-flex items-center justify-center rounded-md bg-paper p-0.5 ring-1 ring-espresso/10 flex-shrink-0"
+          title={alt}
+        >
+          {img}
+        </span>
+      );
+    }
+    return img;
   }
 
   return <GeneralIcon size={s} className={base} />;
 }
 
-/** 深色 chip 上 Logo 需白底，否则 Grok 等深色图标会看不见 */
+/** 深色 chip 上 Logo 需白底 */
 function isDarkChipColor(color: string): boolean {
-  return /gray-9|gray-8|bg-black|bg-slate-9|bg-zinc-9/.test(color);
+  return /bg-espresso|espresso|gray-9|gray-8|bg-black|bg-slate-9|bg-zinc-9/.test(color);
 }
 
 function ChipLogo({ platform, size }: { platform: AIPlatform; size: number }) {
